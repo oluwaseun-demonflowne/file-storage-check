@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* :root { */
+/* --font-sans: 'Poppins', sans-serif; Define the custom variable */
+/* } */
+
+.video {
+  width: 100%;
+}
+
+.btn-rounded {
+  border-radius: 5px;
+}
+
+.round-it {
+  border-radius: 5px;
+}
+
+.triangle {
+  display: none;
+}
+
+.triangle:checked ~ div .theNav {
+  max-width: 400px;
+}
+.triangle:checked ~ div .spanss {
+  padding-right: 15px;
+}
+
+.triangle-icon {
+  float: left;
+  transition: all 0.2s ease-out;
+}
+
+.triangle:checked ~ .triangle-icon {
+  /* transform: rotate(180deg); */
+  transform: scaleX(-1);
+}
+
+.theNav {
+  max-width: 0;
+  overflow: hidden;
+  transition: max-width 0.2s ease-out;
+}

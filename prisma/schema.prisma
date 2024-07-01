@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id                        String    @id @default(cuid())
+  companyName               String    @unique
+  plan                      String
+  currentSize               Float
+  maxSize                   Float
+  days                      Int  
+  createdAt                 DateTime  @default(now()) @db.Timestamptz(6)
+  freePlanExpirationDate    DateTime
+  companyFiles              File[]
+  companyProfile            Profile[]
+  subscriptionId            String?
+  sentEmailReminder         Boolean
+}
+
+model Profile {
+  id              String  @id @default(cuid())
+  companyId       String
+  email           String  @unique
+  profileFiles    File[]
+  importantFiles  Important[]
+  personCompany   Company @relation(fields: [companyId], references: [id])
+}
+
+model Important {
+  id                  String  @id @default(cuid())
+  profileId           String
+  fileId              String
+  fileProfilePerson   Profile @relation(fields: [profileId], references: [id])
+  fileProfileDetail   File @relation(fields: [fileId], references: [id])
+}
+
+model File {
+  id                         String  @id @default(cuid())
+  companyId                  String
+  fileName                   String
+  fileExtension              String
+  profileId                  String
+  email                      String
+  url                        String
+  visibility                 String
+  size                       Float
+  month                      Int
+  date                       Int
+  year                       Int
+  minute                     Int
+  hour                       Int
+  ampm                       String
+  createdAt                  DateTime  @default(now()) @db.Timestamptz(6)
+  importantFilesDetails      Important[]
+  fileCompany                Company @relation(fields: [companyId], references: [id])
+  fileProfile                Profile @relation(fields: [profileId], references: [id])
+}
